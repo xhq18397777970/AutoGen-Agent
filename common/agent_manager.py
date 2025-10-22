@@ -7,6 +7,7 @@ from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
 
 from agents.weather_agent.weather_agent import WeatherAgent
 from agents.ip_agent.ip_agent import IPAgent
+from agents.domain_agent.domain_agent import DomainAgent
 from .config import config
 
 
@@ -30,15 +31,19 @@ class AgentManager:
         self.ip_agent = IPAgent(self.llm_config)
         self.agents["ip"] = self.ip_agent
         
+        # 初始化域名查询Agent
+        self.domain_agent = DomainAgent(self.llm_config)
+        self.agents["domain"] = self.domain_agent
+        
         # 初始化通用助手Agent
         self.general_agent = AssistantAgent(
             name="general_assistant",
             system_message="""你是一个通用助手，负责协调和回答一般性问题。你的职责是：
-1. 回答用户的普通问题和对话
 2. 识别用户需求并将其路由到专业助手
 3. 当用户询问天气时，请转交给weather_assistant
 4. 当用户询问IP地址时，请转交给ip_assistant
-5. 协调多个专业助手的工作。""",
+5. 当用户询问域名查询或域名状态时，请转交给domain_assistant
+6. 协调多个专业助手的工作。""",
             llm_config=self.llm_config
         )
         self.agents["general"] = self.general_agent
@@ -49,10 +54,10 @@ class AgentManager:
             system_message="""你是一个智能路由助手，负责分析用户意图并将任务分配给合适的专家。
 根据问题类型选择专家：
 - 天气相关：转给weather_assistant
-- IP地址、地理位置：转给ip_assistant  
-- 其他一般问题：自己回答或转给general_assistant
+- IP归属地：转给ip_assistant
+- 域名查询、域名状态检测：转给domain_assistant
 
-请先分析用户问题，然后决定由哪个专家处理，或者直接回答。""",
+请先分析用户问题，然后决定由哪个专家处理""",
             llm_config=self.llm_config
         )
         self.agents["router"] = self.router_agent
@@ -105,11 +110,7 @@ class AgentManager:
             llm_config=self.llm_config
         )
         
-        default_message = message or """你好！我是一个需要帮助的用户。我有几个问题：
-1. 我想知道北京和纽约的天气情况
-2. 我还想查询一下IP地址 8.8.8.8 的信息
-3. 另外，能告诉我今天日期吗？
-请帮我处理这些问题。"""
+        default_message = message 
         
         self.user_proxy.initiate_chat(manager, message=default_message)
     

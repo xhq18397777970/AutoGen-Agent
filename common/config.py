@@ -24,7 +24,7 @@ class Config:
             "config_list": [
                 {
                     "model": os.getenv("LLM_MODEL", "deepseek-chat"),
-                    "api_key": os.getenv("LLM_API_KEY", "sk-bbb938ce229d471b964eafee206668f3"),
+                    "api_key": os.getenv("LLM_API_KEY", "sk-ae591b74e70242b192af25c94062a013"),
                     "base_url": os.getenv("LLM_BASE_URL", "https://api.deepseek.com"),
                     "api_type": "openai",
                 }

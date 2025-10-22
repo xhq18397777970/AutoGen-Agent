@@ -49,20 +49,18 @@ def chat_with_weather_assistant():
     """与天气助手对话"""
     print("\n🌤️ 启动天气查询助手")
     print("输入'quit'退出对话")
-    agent_manager.chat_with_agent(
-        "weather", 
-        "请查询北京和上海的天气情况，并给我出行建议"
-    )
+    user_input = input("请输入您的天气查询问题: ").strip()
+    if user_input.lower() != 'quit':
+        agent_manager.chat_with_agent("weather", user_input)
 
 
 def chat_with_ip_assistant():
     """与IP助手对话"""
     print("\n🌐 启动IP查询助手")
     print("输入'quit'退出对话")
-    agent_manager.chat_with_agent(
-        "ip", 
-        "请查询IP地址 8.8.8.8 和 114.114.114.114 的归属地信息"
-    )
+    user_input = input("请输入您的IP查询问题: ").strip()
+    if user_input.lower() != 'quit':
+        agent_manager.chat_with_agent("ip", user_input)
 
 
 def start_group_chat():
@@ -76,10 +74,9 @@ def chat_with_router():
     """通过路由助手进行智能对话"""
     print("\n🧠 启动智能路由对话")
     print("输入'quit'退出对话")
-    agent_manager.chat_with_agent(
-        "router", 
-        "我想查询北京的天气，还想知道IP地址 8.8.8.8 在哪里"
-    )
+    user_input = input("请输入您的问题: ").strip()
+    if user_input.lower() != 'quit':
+        agent_manager.chat_with_agent("router", user_input)
 
 
 def main():
