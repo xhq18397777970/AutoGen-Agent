@@ -1,0 +1,22 @@
+# 多Agent系统依赖包
+
+# AutoGen框架
+pyautogen>=0.2.0
+
+# HTTP客户端
+httpx>=0.25.0
+
+# 环境变量管理
+python-dotenv>=1.0.0
+
+# 类型注解支持
+typing-extensions>=4.8.0
+
+# 异步支持
+asyncio>=3.4.3
+
+# JSON处理
+pydantic>=2.0.0
+
+# 日志记录
+loguru>=0.7.0
